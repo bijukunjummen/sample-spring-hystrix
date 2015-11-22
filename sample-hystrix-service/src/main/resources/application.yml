@@ -1,0 +1,7 @@
+---
+server:
+  port: 8082
+
+
+reply:
+  message: Sample Message local

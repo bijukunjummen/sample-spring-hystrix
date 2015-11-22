@@ -1,0 +1,38 @@
+---
+server:
+  port: 8080
+
+sampleservice:
+  ribbon:
+    DeploymentContextBasedVipAddresses: sample-hystrix-service
+    ReadTimeout: 10000
+    MaxAutoRetries: 2
+
+hystrix:
+  command:
+    RemoteMessageClientCommand:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+    RemoteMessageAnnotationClient:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+hystrix:
+  command:
+    HelloWorldCommand:
+      metrics:
+        rollingStats:
+          timeInMilliseconds: 10000
+      execution:
+        isolation:
+          strategy: THREAD
+          thread:
+            timeoutInMilliseconds: 5000
+      circuitBreaker:
+        errorThresholdPercentage: 50
+        requestVolumeThreshold: 20
+        sleepWindowInMilliseconds: 5000
