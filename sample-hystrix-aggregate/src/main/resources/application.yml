@@ -20,19 +20,3 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 5000
-
-hystrix:
-  command:
-    HelloWorldCommand:
-      metrics:
-        rollingStats:
-          timeInMilliseconds: 10000
-      execution:
-        isolation:
-          strategy: THREAD
-          thread:
-            timeoutInMilliseconds: 5000
-      circuitBreaker:
-        errorThresholdPercentage: 50
-        requestVolumeThreshold: 20
-        sleepWindowInMilliseconds: 5000
