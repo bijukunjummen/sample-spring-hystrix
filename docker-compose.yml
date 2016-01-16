@@ -1,24 +1,23 @@
 sampleeureka:
-  image: "sample-hystrix-eureka:1.0.0-SNAPSHOT"
+  image: "sample-hystrix-eureka:1.0.1-SNAPSHOT"
   hostname: sampleeureka
-  name: sampleeureka
   ports:
    - "8761:8761"
 
 sampleconfig:
-  image: "sample-hystrix-config:1.0.0-SNAPSHOT"
+  image: "sample-hystrix-config:1.0.1-SNAPSHOT"
   hostname: sampleconfig
-  name: sampleconfig
   links:
     - sampleeureka
   environment:
      EUREKA_HOST: sampleeureka
      EUREKA_PORT: 8761
+     SERVER_PORT: 8080
   ports:
     - "8888:8888"
 
 sampleservice:
-  image: sample-hystrix-service:1.0.0-SNAPSHOT
+  image: sample-hystrix-service:1.0.1-SNAPSHOT
   hostname: sample-service
   links:
     - sampleeureka
@@ -31,9 +30,9 @@ sampleservice:
   ports:
     - "8082:8080"
 
-sampleaggregate:
-  image: sample-hystrix-aggregate:1.0.0-SNAPSHOT
-  hostname: sample-aggregate
+sampleaggregate1:
+  image: sample-hystrix-aggregate:1.0.1-SNAPSHOT
+  hostname: sampleaggregate1
   links:
     - sampleeureka
     - sampleconfig
@@ -41,21 +40,51 @@ sampleaggregate:
   environment:
      EUREKA_HOST: sampleeureka
      EUREKA_PORT: 8761
+     SERVER_PORT: 8080
+     SPRING_PROFILES_ACTIVE: docker
+
+sampleaggregate2:
+  image: sample-hystrix-aggregate:1.0.1-SNAPSHOT
+  hostname: sampleaggregate2
+  links:
+    - sampleeureka
+    - sampleconfig
+    - sampleservice
+  environment:
+     EUREKA_HOST: sampleeureka
+     EUREKA_PORT: 8761
+     SERVER_PORT: 8080
+     SPRING_PROFILES_ACTIVE: docker
+
+samplegateway:
+  image: sample-hystrix-gateway:1.0.1-SNAPSHOT
+  hostname: samplegateway
+  links:
+    - sampleeureka
+    - sampleconfig
+    - sampleaggregate1
+    - sampleaggregate2
+  environment:
+     EUREKA_HOST: sampleeureka
+     EUREKA_PORT: 8761
+     SERVER_PORT: 8080
      SPRING_PROFILES_ACTIVE: docker
   ports:
     - "8080:8080"
 
 samplemonitor:
-  image: sample-monitor:1.0.0-SNAPSHOT
+  image: sample-hystrix-monitor:1.0.1-SNAPSHOT
   hostname: samplemonitor
   links:
     - sampleeureka
     - sampleconfig
     - sampleservice
-    - sampleaggregate
+    - sampleaggregate1
+    - sampleaggregate2
   environment:
      EUREKA_HOST: sampleeureka
      EUREKA_PORT: 8761
+     SERVER_PORT: 8080
      SPRING_PROFILES_ACTIVE: docker
   ports:
-    - "8989:8989"
+    - "8989:8080"

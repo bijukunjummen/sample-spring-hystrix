@@ -1,6 +1,5 @@
 package agg.samples.commands.collapsed;
 
-import com.google.common.base.Objects;
 
 public class Person {
     private final Integer id;
@@ -21,9 +20,10 @@ public class Person {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
-                .add("id", id)
-                .add("name", name)
-                .toString();
+        final StringBuffer sb = new StringBuffer("Person{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

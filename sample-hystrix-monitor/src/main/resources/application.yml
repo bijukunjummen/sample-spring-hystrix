@@ -5,4 +5,8 @@ server:
 
 turbine:
   aggregator:
-    clusterConfig: sample-hystrix-aggregate
+    clusterConfig: SAMPLE-HYSTRIX-AGGREGATE
+  appConfig: SAMPLE-HYSTRIX-AGGREGATE
+
+logging:
+  level: INFO
