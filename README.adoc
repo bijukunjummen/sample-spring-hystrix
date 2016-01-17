@@ -25,21 +25,42 @@ cd sample-hystrix-config
 mvn spring-boot:run
 ----
 
-.Start up Pong Service
+.Start up Sample Service
 [source,java]
 ----
 cd sample-hystrix-service
 mvn spring-boot:run
 ----
 
-.Start up Ping Service
+.Start up Aggregate Application
 [source,java]
 ----
 cd sample-hystrix-aggregate
 mvn spring-boot:run
 ----
 
-If all the applications have come up cleanly, the endpoint should be available at http://localhost:8080
+.Start up Gateway Application
+[source,java]
+----
+cd sample-hystrix-gateway
+mvn spring-boot:run
+----
+
+.Start up Monitoring Application
+[source,java]
+----
+cd sample-hystrix-monitor
+mvn spring-boot:run
+----
+
+
+If all the applications have come up cleanly, the following endpoints are available:
+
+* Endpoints of the gateway application which forwards requests to the sample-hystrix-aggregate: Try http://localhost:8080/sample-hystrix-aggregate/hello
+* Eureka endpoint at http://localhost:8761
+* Hystrix dashboard at http://localhost:8989/hystrix
+* Turbine stream which aggregates information from sample-hystrix-aggregate application at http://localhost:8989/turbine.stream?cluster=SAMPLE-HYSTRIX-AGGREGATE
+* A sample UI is available at http://localhost:8080
 
 On Docker
 ~~~~~~~~~
@@ -58,7 +79,13 @@ mvn clean package docker:build
 docker-compose up
 ----
 
-That is it, the endpoint should be available at http://dockerhost:8080
+If all the applications have come up cleanly, the following endpoints are available:
+
+* Endpoints of the gateway application which forwards requests to the sample-hystrix-aggregate: Try http://dockerip:8080/sample-hystrix-aggregate/hello
+* Eureka endpoint at http://dockerip:8761
+* Hystrix dashboard at http://dockerip:8989/hystrix
+* Turbine stream which aggregates information from sample-hystrix-aggregate application at http://dockerip:8989/turbine.stream?cluster=SAMPLE-HYSTRIX-AGGREGATE
+* A sample UI is available at http://dockerip:8080
 
 
 
