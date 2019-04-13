@@ -4,9 +4,9 @@ spring:
     name: sample-hystrix-service
   cloud:
     config:
-      enabled: true
+      enabled: false
       discovery:
-        enabled: true
+        enabled: false
         serviceId: SAMPLE-HYSTRIX-CONFIG
 
 

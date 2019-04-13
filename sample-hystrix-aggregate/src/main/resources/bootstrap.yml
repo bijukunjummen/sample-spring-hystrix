@@ -4,10 +4,10 @@ spring:
     name: sample-hystrix-aggregate
   cloud:
     config:
-      enabled: true
+      enabled: false
       discovery:
-        enabled: true
-        serviceId: SAMPLE-HYSTRIX-CONFIG
+        enabled: false
+        serviceId: sample-hystrix-config
 
 eureka:
   instance:
