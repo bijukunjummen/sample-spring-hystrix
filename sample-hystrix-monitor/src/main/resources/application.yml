@@ -9,4 +9,5 @@ turbine:
   appConfig: SAMPLE-HYSTRIX-AGGREGATE
 
 logging:
-  level: INFO
+  level:
+    root: INFO
